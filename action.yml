@@ -1,0 +1,27 @@
+name: "OSS Chain Bench action"
+description: "Run software supply chain benchmark"
+author: Itay Wolfish
+branding:
+  icon: "zap"
+  color: "yellow"
+inputs:
+  repository-url:
+    description: "The github repository url with the server"
+    required: true
+  github-token:
+    description: "Github Token that will be used to access the repository"
+    required: true
+  scm-platform:
+    description: "the SCM platform for self-hosted/dedicated environments (options: 'github', 'gitlab')"
+    required: false
+outputs:
+  chain-bench-result:
+    description: 'JSON output from chain-bench run'
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - 'scan'
+    - -r ${{ inputs.repository-url }}
+    - -t ${{ inputs.github-token }}
+    - -s ${{ inputs.scm-platform }}
